@@ -1,0 +1,103 @@
+#determining mean rolls/round using Monte Carlo
+
+import random
+
+position = 1
+rounds = 0
+rolls = 0
+
+def roll_mc():
+    global position
+    global rounds
+    global rolls
+    position += random.randint(1,6)
+    position += random.randint(1,6)
+    rolls += 1
+    random_number = 0
+    
+    if position > 40:
+        position = position-40
+        rounds += 1
+        
+        
+    if position == 3 or position == 17 or position == 34:
+        random_number = random.randint(1,16)
+        if random_number == 1:
+            if position < 11:
+                rounds += 1
+            position = 11
+        elif random_number == 2:
+            position = 1
+            rounds += 1
+
+    elif position == 8 or position == 23 or position == 37:
+        random_number = random.randint(1,16)
+        if random_number == 1:
+            position = 1
+            rounds += 1
+        if random_number == 2:
+            if position > 23:
+                rounds += 1
+
+            position = 23
+            
+        if random_number == 3:
+            if position > 12:
+                rounds += 1
+
+            position = 12
+            
+        if random_number == 4:
+            if position == 8:
+                position = 13
+            if position == 23:
+                position = 29
+            if position == 37:
+                position = 13
+                rounds += 1
+
+        if random_number == 5:
+            if position == 8:
+                position = 16
+            if position == 23:
+                position = 26
+            if position == 37:
+                position = 6
+                rounds += 1
+                
+        if random_number == 6:
+            position = 11
+
+        if random_number == 7:
+            position = 6
+
+        if random_number == 8:
+            position = 40
+
+        if random_number == 9:
+            position += -3
+            if position == 3 or position == 17 or position == 34:
+                random_number = random.randint(1,16)
+            if random_number == 1:
+                if position < 11:
+                    rounds += 1
+                position = 11
+            elif random_number == 2:
+                position = 1
+                rounds += 1    
+    
+                
+
+            
+            
+            
+    elif position == 31:
+        position = 11
+    
+        
+    
+        
+for i in range (0,500000):
+    roll_mc()
+
+print(rolls/rounds)
